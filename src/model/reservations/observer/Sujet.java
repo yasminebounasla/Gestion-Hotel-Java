@@ -1,2 +1,2 @@
-package model.reservations.observer;
+package model.Reservations.Observer;
 public interface Sujet {}

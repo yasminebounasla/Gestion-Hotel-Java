@@ -1,2 +1,2 @@
-package model.clients;
+package model.Clients;
 public abstract class Client {}

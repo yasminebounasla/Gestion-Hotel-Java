@@ -1,2 +1,2 @@
-package model.hotel;
+package model.Hotel;
 public class GestionnaireHotel {}

@@ -1,2 +1,2 @@
-package model.reservations;
+package model.Reservations;
 public class Reservation {}

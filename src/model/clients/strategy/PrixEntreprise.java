@@ -1,2 +1,2 @@
-package model.clients.strategy;
+package model.Clients.Strategy;
 public class PrixEntreprise implements StrategyPrix {}
