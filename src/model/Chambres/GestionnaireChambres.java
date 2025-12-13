@@ -25,7 +25,7 @@ public class GestionnaireChambres {
     public ArrayList<Chambre> getChambresDisponibles() {
         ArrayList<Chambre> disponibles = new ArrayList<>();
         for (Chambre chambre : chambres) {
-            if (chambre.isDisponible()) {
+            if (chambre.getStatut().toString().equals("DISPONIBLE")) {
                 disponibles.add(chambre);
             }
         }
@@ -51,7 +51,7 @@ public class GestionnaireChambres {
     }
 
     public String getStatut(Chambre chambre) {
-        return chambre.isDisponible() ? "Libre" : "Réservée";
+        return chambre.getStatut().toString();
     }
 
     public boolean supprimerChambre(Chambre chambre) {
