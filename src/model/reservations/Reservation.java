@@ -1,2 +1,42 @@
 package model.Reservations;
-public class Reservation {}
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Chambres.Composite.Chambre;
+import model.clients.Client;
+
+public class Reservation {
+     private Client client;
+    private Chambre chambre;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    private List<Service> services;
+    private double prixTotal;
+
+    public Reservation(Client client, Chambre chambre, LocalDate dateDebut, LocalDate dateFin, List<Service> services) {
+        this.client = client;
+        this.chambre = chambre;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.services = services != null ? services : new ArrayList<>();
+        this.prixTotal = 0;
+    }
+
+    public double calculerPrixTotal() {
+        double total = chambre.calculerPrix();
+        for (Service s : services) {
+            total += s.getPrix();
+        }
+        this.prixTotal = total;
+        return total;
+    }
+
+    public Client getClient() { return client; }
+    public Chambre getChambre() { return chambre; }
+    public LocalDate getDateDebut() { return dateDebut; }
+    public LocalDate getDateFin() { return dateFin; }
+    public List<Service> getServices() { return services; }
+    public double getPrixTotal() { return prixTotal; }
+}
