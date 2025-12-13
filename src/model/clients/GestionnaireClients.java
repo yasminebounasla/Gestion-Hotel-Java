@@ -34,6 +34,15 @@ public class GestionnaireClients {
         return null;
     }
 
+    public Client getClientParNom(String nom) {
+        for (Client client : clients) {
+            if (client.getNom().equals(nom)) {
+                return client;
+            }
+        }
+        return null;
+    }
+
     public int getNombreClients() {
         return this.clients.size();
     }

@@ -32,11 +32,11 @@ public abstract class Chambre {
     }
 
     public double getPrixBase() {
-     return prixBase;
+       return prixBase;
     }
 
     public StatutChambre getStatut() {
-           return statut;
+        return statut;
     }
 
     public List<String> getEquipements() {
