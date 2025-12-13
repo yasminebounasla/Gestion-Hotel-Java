@@ -48,8 +48,6 @@ public class GestionnaireClients {
     }
 
     public String getClientType(Client client) {
-    return client.getType(); 
-}
-
-
+        return client.getTypeClient();
+    }
 }
