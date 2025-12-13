@@ -1,4 +1,4 @@
-package model.clients.Strategy;
+package model.Clients.Strategy;
 
 /**
  * Stratégie de prix pour les clients VIP.
