@@ -1,5 +1,49 @@
 package model.Reservations;
 
+import java.util.ArrayList;
+
 public class GestionnaireReservations {
 
+    private ArrayList<Reservation> reservations;
+
+    public GestionnaireReservations() {
+        this.reservations = new ArrayList<>();
+    }
+
+    public void ajouterReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+        notifier();
+    }
+
+    public void deleteReservations(Reservation reservation) {
+        this.reservations.remove(reservation);
+        notifier();
+    }
+
+    public boolean updateReservation(Reservation oldR, Reservation newR) {
+        int index = reservations.indexOf(oldR); // cherche l'ancienne réservation
+        if (index != -1) {
+            reservations.set(index, newR); 
+            notifier();
+            return true; // succès
+        }
+        return false; // oldR non trouvé
+    }
+
+    public void clearReservations() {
+        this.reservations.clear();
+        notifier();
+    }
+    
+    public int getNombreReservations() {
+        return this.reservations.size();
+    }
+
+    public ArrayList<Reservation> getReservations() {
+        return reservations;
+    }
+
+
+    private void notifier() {
+    }
 }
