@@ -42,10 +42,11 @@ public class GestionnaireChambres {
     }
 
     public boolean updateChambre(Chambre oldC, Chambre newC) {
-        int index = chambres.indexOf(oldC); 
-        if (index != -1) {
-            chambres.set(index, newC); 
-            return true;
+        for (int i = 0; i < chambres.size(); i++) {
+            if (chambres.get(i).getNumero() == oldC.getNumero()) {
+                chambres.set(i, newC);
+                return true;
+            }
         }
         return false;
     }
