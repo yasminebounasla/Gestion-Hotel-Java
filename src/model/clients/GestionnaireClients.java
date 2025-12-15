@@ -48,13 +48,15 @@ public class GestionnaireClients {
     }
 
     public boolean updateClient(Client oldC, Client newC) {
-        int index = clients.indexOf(oldC);
-        if (index != -1) {
-            clients.set(index, newC);
-            return true;
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getId() == oldC.getId()) {
+                clients.set(i, newC);
+                return true;
+            }
         }
         return false;
     }
+
 
     public String getClientType(Client client) {
         return client.getTypeClient();

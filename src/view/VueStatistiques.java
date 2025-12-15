@@ -1,8 +1,8 @@
 package view;
 
-import model.reservations.GestionnaireReservations;
-import model.reservations.observer.Observateur;
-import model.reservations.observer.Sujet;
+import model.Reservations.GestionnaireReservations;
+import model.Reservations.Observer.Observateur;
+import model.Reservations.Observer.Sujet;
 
 public class VueStatistiques implements Observateur{
 

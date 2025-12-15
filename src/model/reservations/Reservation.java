@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Chambres.Composite.Chambre;
-import model.clients.Client;
+import model.Clients.Client;
 
 public class Reservation {
      private Client client;

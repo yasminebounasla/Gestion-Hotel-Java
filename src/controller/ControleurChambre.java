@@ -6,41 +6,41 @@ import model.Chambres.*;
 import model.Chambres.Composite.Chambre;
 
 public class ControleurChambre {
-    private GestionnaireChambres gestionnaire;
+    private GestionnaireChambres gestionnaireCh;
 
-    public ControleurChambre(GestionnaireChambres gestionnaire) {
-        this.gestionnaire = gestionnaire;
+    public ControleurChambre(GestionnaireChambres gestionnaireCh) {
+        this.gestionnaireCh = gestionnaireCh;
     }
 
     public void ajouterChambre(Chambre chambre) {
-        this.gestionnaire.ajouterChambre(chambre);
+        this.gestionnaireCh.ajouterChambre(chambre);
     }
     
     public ArrayList<Chambre> getChambres() {
-        return gestionnaire.getChambres();
+        return gestionnaireCh.getChambres();
     }
 
     public int getNombreChambres() {
-        return this.gestionnaire.getNombreChambres();
+        return this.gestionnaireCh.getNombreChambres();
     }   
 
     public ArrayList<Chambre> getChambresDisponibles() {
-        return gestionnaire.getChambresDisponibles();
+        return gestionnaireCh.getChambresDisponibles();
     }
 
     public Chambre getChambreParNumero(int numero) {
-        return gestionnaire.getChambreParNumero(numero);
+        return gestionnaireCh.getChambreParNumero(numero);
     }
 
     public boolean updateChambre(Chambre oldC, Chambre newC) {
-        return gestionnaire.updateChambre(oldC, newC);
+        return gestionnaireCh.updateChambre(oldC, newC);
     }
 
     public String getStatut(Chambre chambre) {
-        return gestionnaire.getStatut(chambre);
+        return gestionnaireCh.getStatut(chambre);
     }
 
     public boolean supprimerChambre(Chambre chambre) {
-        return gestionnaire.supprimerChambre(chambre);
+        return gestionnaireCh.supprimerChambre(chambre);
     }
 }

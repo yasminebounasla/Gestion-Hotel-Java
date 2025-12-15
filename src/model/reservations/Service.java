@@ -1,4 +1,4 @@
-package model.reservations;
+package model.Reservations;
 
 public class Service {
     private String nom;

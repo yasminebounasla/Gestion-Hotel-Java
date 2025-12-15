@@ -1,9 +1,9 @@
 package view;
 
-import model.reservations.GestionnaireReservations;
-import model.reservations.Reservation;
-import model.reservations.observer.Observateur;
-import model.reservations.observer.Sujet;
+import model.Reservations.GestionnaireReservations;
+import model.Reservations.Reservation;
+import model.Reservations.Observer.Observateur;
+import model.Reservations.Observer.Sujet;
 
 public class VueReservation implements Observateur{
     private GestionnaireReservations gestionnaire;

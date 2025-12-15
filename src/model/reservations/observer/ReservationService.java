@@ -1,4 +1,4 @@
-package model.reservations.observer;
+package model.Reservations.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
