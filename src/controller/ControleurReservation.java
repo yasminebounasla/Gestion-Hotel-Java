@@ -9,6 +9,10 @@ public class ControleurReservation {
 
     private GestionnaireReservations gestionnaireR ;
 
+    public ControleurReservation(GestionnaireReservations gestionnaireR) {
+        this.gestionnaireR = gestionnaireR;
+    }
+
     public void ajouterReservation(Reservation reservation) {
         this.gestionnaireR.ajouterReservation(reservation);
     }
