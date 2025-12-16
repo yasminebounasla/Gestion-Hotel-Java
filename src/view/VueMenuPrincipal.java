@@ -42,6 +42,10 @@ public class VueMenuPrincipal {
                     // Appeler la vue de gestion des réservations
                     new VueStatistiques(controleurPrincipal).afficher();
                     break;
+                case 5:
+                    // Appeler la vue de gestion des réservations
+                    new VueConsole(controleurPrincipal).afficher();
+                    break;
                 case 0:
                     System.out.println("Au revoir");
                     break;
