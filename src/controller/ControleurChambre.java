@@ -32,7 +32,7 @@ public class ControleurChambre {
         return gestionnaireCh.getChambreParNumero(numero);
     }
 
-    public boolean updateChambre(Chambre oldC, Chambre newC) {
+    public boolean modifierChambre(Chambre oldC, Chambre newC) {
         return gestionnaireCh.updateChambre(oldC, newC);
     }
 

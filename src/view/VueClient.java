@@ -24,10 +24,6 @@ public class VueClient {
             System.out.println("2. Supprimer un client");
             System.out.println("3. Modifier un client");
             System.out.println("4. Afficher tous les clients");
-            System.out.println("5. avoir le nombre de clients");
-            System.out.println("6. afficher le type d'un client");
-            System.out.println("7. afficher un client par ID");
-            System.out.println("8. afficher par nom");
             System.out.println("0. Retour au menu principal");
             System.out.print("Choisissez une option: ");
             choix = scanner.nextInt();
