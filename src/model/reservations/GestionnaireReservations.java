@@ -2,12 +2,16 @@ package model.Reservations;
 
 import java.util.ArrayList;
 
+import model.Reservations.Observer.ReservationService;
+
 public class GestionnaireReservations {
 
     private ArrayList<Reservation> reservations;
+    private ReservationService reservationService;
 
-    public GestionnaireReservations() {
+    public GestionnaireReservations(ReservationService reservationService) {
         this.reservations = new ArrayList<>();
+        this.reservationService = reservationService;
     }
 
     public void ajouterReservation(Reservation reservation) {
@@ -45,5 +49,6 @@ public class GestionnaireReservations {
 
 
     private void notifier() {
+        reservationService.notifierObservateurs();
     }
 }
