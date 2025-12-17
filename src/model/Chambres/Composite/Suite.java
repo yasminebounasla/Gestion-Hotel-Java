@@ -27,4 +27,13 @@ public class Suite extends Chambre {
         }
         return total;
     }
+
+    @Override
+    public void afficherDetails() {
+        super.afficherDetails();
+        System.out.println("Sous-chambres :");
+        for (Chambre c : sousChambres) {
+         c.afficherDetails();
+        }
+    }
 }
