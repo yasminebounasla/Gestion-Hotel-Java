@@ -36,7 +36,7 @@ public class VueMenuPrincipal {
                     break;
                 case 3:
                     // Appeler la vue de gestion des réservations
-                    new VueReservation(controleurPrincipal.getControleurReservation()).afficherMenu();
+                    new VueReservationMenu(controleurPrincipal.getControleurReservation()).afficherMenu();
                     break;
                 case 4:
                     // Appeler la vue de gestion des réservations

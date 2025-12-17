@@ -21,7 +21,7 @@ public class ControleurPrincipal {
         // init controllers
         controleurChambre = new ControleurChambre(gc);
         controleurClient = new ControleurClient(gcl);
-        controleurReservation = new ControleurReservation(gr);
+        controleurReservation = new ControleurReservation(gr, controleurClient, controleurChambre);
     }
 
     public ControleurChambre getControleurChambre() {
