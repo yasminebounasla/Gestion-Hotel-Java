@@ -42,4 +42,36 @@ public class ControleurClient {
     public String getClientType(Client client) {
         return this.gestionnaireCl.getClientType(client);   
     }
+
+    public double calculerPrix(Client client, double prixBase) {
+        return gestionnaireCl.calculerPrix(client, prixBase);
+    }
+
+    // ----- VIP -----
+
+    public boolean ajouterPointsVIP(Client client, int points) {
+        return gestionnaireCl.ajouterPointsVIP(client, points);
+    }
+
+    public boolean utiliserPointsVIP(Client client, int points) {
+        return gestionnaireCl.utiliserPointsVIP(client, points);
+    }
+
+    // ----- ENTREPRISE -----
+
+    public void incrementerReservationEntreprise(Client client) {
+        gestionnaireCl.incrementerReservationEntreprise(client);
+    }
+
+    public void decrementerReservationEntreprise(Client client) {
+        gestionnaireCl.decrementerReservationEntreprise(client);
+    }
+
+    public double calculerPrixEntrepriseFidelite(Client client, double prixBase) {
+        return gestionnaireCl.calculerPrixEntrepriseFidelite(client, prixBase);
+    }
+
+    public String obtenirFacturationEntreprise(Client client) {
+        return gestionnaireCl.obtenirFacturationEntreprise(client);
+    }
 }

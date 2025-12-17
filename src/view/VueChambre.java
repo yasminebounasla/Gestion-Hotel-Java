@@ -102,7 +102,38 @@ public class VueChambre {
 
         controleurChambre.ajouterChambre(chambre);
         System.out.println("Chambre ajoutée avec succès !");
+
+        if (chambre instanceof Suite) {
+
+            System.out.println("Voulez-vous ajouter des sous-chambres ? (1 = Oui, 0 = Non) : ");
+            int choixSous = scanner.nextInt();
+            scanner.nextLine();
+
+            while (choixSous == 1) {
+
+                ajouterSousChambreSuite((Suite) chambre);
+                System.out.println("Ajouter une autre sous-chambre ? (1 = Oui, 0 = Non) : ");
+                choixSous = scanner.nextInt();
+                scanner.nextLine();
+            }
+        }
     }
+
+
+    private void ajouterSousChambreSuite(Suite suite) {
+        System.out.println("Numéro de la chambre à ajouter comme sous-chambre : ");
+        int num = scanner.nextInt();
+        scanner.nextLine();
+        
+        Chambre c = controleurChambre.getChambreParNumero(num);
+        if (c != null) {
+            suite.ajouterChambre(c);
+            System.out.println("Sous-chambre ajoutée !");
+        } else {
+            System.out.println("Chambre non trouvée.");
+        }
+    }
+        
 
     private void supprimerChambre() {
         System.out.print("Entrez le numéro de la chambre à supprimer: ");

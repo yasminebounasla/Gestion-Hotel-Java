@@ -36,7 +36,7 @@ public class GestionnaireClients {
 
     public Client getClientParNom(String nom) {
         for (Client client : clients) {
-            if (client.getNom().equals(nom)) {
+            if (client.getNom().equalsIgnoreCase(nom)) {
                 return client;
             }
         }
@@ -47,18 +47,70 @@ public class GestionnaireClients {
         return this.clients.size();
     }
 
-    public boolean updateClient(Client oldC, Client newC) {
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getId() == oldC.getId()) {
-                clients.set(i, newC);
-                return true;
-            }
+    public boolean updateClient(Client oldClient,  Client newClient) {
+        if (oldClient != null) {
+            oldClient.setNom(newClient.getNom());
+            oldClient.setPrenom(newClient.getPrenom());
+            oldClient.setTelephone(newClient.getTelephone());
+            oldClient.setEmail(newClient.getEmail());
+            return true;
         }
         return false;
     }
 
 
+
     public String getClientType(Client client) {
         return client.getTypeClient();
     }
+
+    public double calculerPrix(Client client, double prixBase) {
+        return client.calculerPrixFinal(prixBase);
+    }
+
+    //VIP Points management
+
+    public boolean ajouterPointsVIP(Client client, int points) {
+        if (client instanceof ClientVIP vip) {
+            vip.ajouterPoints(points);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean utiliserPointsVIP(Client client, int points) {
+        if (client instanceof ClientVIP vip) {
+            return vip.utiliserPoints(points);
+        }
+        return false;
+    }
+
+    // Entreprise reservations 
+
+    public void incrementerReservationEntreprise(Client client) {
+        if (client instanceof ClientEntreprise ce) {
+            ce.incrementerReservations();
+        }
+    }
+
+    public void decrementerReservationEntreprise(Client client) {
+        if (client instanceof ClientEntreprise ce) {
+            ce.decrementerReservations();
+        }
+    }
+
+    public double calculerPrixEntrepriseFidelite(Client client, double prixBase) {
+        if (client instanceof ClientEntreprise ce) {
+            return ce.calculerPrixAvecFidelite(prixBase);
+        }
+        throw new IllegalArgumentException("Client non entreprise");
+    }
+
+    public String obtenirFacturationEntreprise(Client client) {
+        if (client instanceof ClientEntreprise ce) {
+            return ce.obtenirInfosFacturation();
+        }
+        return "Ce client n'est pas une entreprise.";
+    }
+
 }

@@ -4,6 +4,7 @@ import model.Chambres.GestionnaireChambres;
 import model.Clients.GestionnaireClients;
 import model.Reservations.GestionnaireReservations;
 import model.Reservations.Observer.ReservationService;
+import view.VueReservationObserver;
 
 public class ControleurPrincipal {
 
@@ -22,6 +23,9 @@ public class ControleurPrincipal {
         controleurChambre = new ControleurChambre(gc);
         controleurClient = new ControleurClient(gcl);
         controleurReservation = new ControleurReservation(gr, controleurClient, controleurChambre);
+
+        VueReservationObserver vueObserver = new VueReservationObserver(controleurReservation);
+        service.ajouterObservateur(vueObserver);
     }
 
     public ControleurChambre getControleurChambre() {

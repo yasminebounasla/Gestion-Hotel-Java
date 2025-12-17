@@ -1,21 +1,21 @@
 package view;
 
-import model.Reservations.GestionnaireReservations;
+import controller.ControleurReservation;
 import model.Reservations.Reservation;
 import model.Reservations.Observer.Observateur;
 import model.Reservations.Observer.Sujet;
 
 public class VueReservationObserver implements Observateur{
-    private GestionnaireReservations gestionnaire;
+    private ControleurReservation controleurReservation;
 
-    public VueReservationObserver(GestionnaireReservations gestionnaire) {
-        this.gestionnaire = gestionnaire;
+    public VueReservationObserver(ControleurReservation controleurReservation) {
+        this.controleurReservation = controleurReservation;
     }
     @Override
     public void mettreAJour(Sujet sujet) {
-        System.out.println("\n=== Mise à jour des réservations ===");
+        System.out.println("\n=== Mise à jour des reservations ===");
 
-        for (Reservation r : gestionnaire.getReservations()) {
+        for (Reservation r : controleurReservation.getReservations()) {
             String clientNomComplet = r.getClient().getNomComplet();
             int numeroChambre = r.getChambre().getNumero();
             double prixTotal = r.getPrixTotal();

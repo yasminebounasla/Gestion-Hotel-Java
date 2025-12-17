@@ -2,6 +2,7 @@ package model.Reservations;
 
 import java.util.ArrayList;
 
+import model.Clients.ClientVIP;
 import model.Reservations.Observer.ReservationService;
 
 public class GestionnaireReservations {
@@ -16,8 +17,18 @@ public class GestionnaireReservations {
 
     public void ajouterReservation(Reservation reservation) {
         this.reservations.add(reservation);
+        // Calculer le prix total
+        reservation.calculerPrixTotal();
+        
+        // Augmenter les points si client VIP
+        if (reservation.getClient() instanceof ClientVIP) {
+            ClientVIP vip = (ClientVIP) reservation.getClient();
+            vip.ajouterPoints((int) reservation.getPrixTotal() / 1000); // exemple : 1 point pour 1000 DA
+        }
+        
         notifier();
     }
+
 
     public void supprimerReservation(Reservation reservation) {
         reservations.remove(reservation);

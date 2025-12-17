@@ -24,6 +24,9 @@ public class VueClient {
             System.out.println("2. Supprimer un client");
             System.out.println("3. Modifier un client");
             System.out.println("4. Afficher tous les clients");
+            System.out.println("6. Gestion points fidélité (VIP)");
+            System.out.println("7. Gestion fidélité entreprise");
+            System.out.println("8. Afficher facture entreprise");
             System.out.println("0. Retour au menu principal");
             System.out.print("Choisissez une option: ");
             choix = scanner.nextInt();
@@ -41,6 +44,15 @@ public class VueClient {
                     break;
                 case 4:
                     afficherClients();
+                    break;
+                case 6 :
+                    gestionPointsVIP();
+                    break;
+                case 7 :
+                    gestionEntreprise();
+                    break;
+                case 8 :
+                    afficherFactureEntreprise();
                     break;
                 case 0:
                     System.out.println("Retour au menu principal.");
@@ -127,12 +139,18 @@ public class VueClient {
             System.out.print("Entrez le nouveau nom du client: ");
             String newNom = scanner.nextLine();
 
+            System.out.print("Entrez le nouveau prénom du client: ");
+            String newPrenom = scanner.nextLine();
+
+            System.out.print("Entrez le nouveau numéro de téléphone du client: ");
+            String newTelephone = scanner.nextLine();
+
+            System.out.print("Entrez le nouveau email du client: ");
+            String newEmail = scanner.nextLine();
+
             // Vérifier le type de client pour créer le bon objet
             Client newClient;
-            if (oldClient instanceof ClientEntreprise ce) {
-
-                System.out.print("Entrez le nouveau prénom: ");
-                String newPrenom = scanner.nextLine();
+            if (oldClient instanceof ClientEntreprise) {
 
                 System.out.print("Nom de l'entreprise: ");
                 String nomEntreprise = scanner.nextLine();
@@ -143,14 +161,14 @@ public class VueClient {
                 System.out.print("Adresse de facturation: ");
                 String adresseFacturation = scanner.nextLine();
 
-                newClient = new ClientEntreprise(newNom, newPrenom, ce.getTelephone(), ce.getEmail(),
+                newClient = new ClientEntreprise(newNom, newPrenom, newTelephone, newEmail,
                                             nomEntreprise, numeroSIRET, adresseFacturation);
 
             } else if (oldClient instanceof ClientVIP) {
-                newClient = new ClientVIP(newNom, oldClient.getPrenom(), oldClient.getTelephone(), oldClient.getEmail());
+                newClient = new ClientVIP(newNom, newPrenom, newTelephone, newEmail);
 
             } else { // ClientRegulier
-                newClient = new ClientRegulier(newNom, oldClient.getPrenom(), oldClient.getTelephone(), oldClient.getEmail());
+                newClient = new ClientRegulier(newNom, newPrenom, newTelephone, newEmail);
             }
 
             if (controleurClient.updateClient(oldClient, newClient)) {
@@ -172,4 +190,81 @@ public class VueClient {
             System.out.println(client);
         }
     }    
+
+    // ================= MÉTIER =================
+
+    private void calculerPrixReservation() {
+        Client c = demanderClientParId();
+        if (c == null) return;
+
+        System.out.print("Prix de base (DA): ");
+        double prix = scanner.nextDouble();
+
+        double prixFinal = controleurClient.calculerPrix(c, prix);
+        System.out.println("Prix final: " + prixFinal + " DA");
+
+        if (c instanceof ClientEntreprise) {
+            controleurClient.incrementerReservationEntreprise(c);
+        }
+        if (c instanceof ClientVIP vip) {
+            vip.ajouterPoints((int) prixFinal / 10);
+        }
+    }
+
+    private void gestionPointsVIP() {
+        Client c = demanderClientParId();
+        if (!(c instanceof ClientVIP vip)) {
+            System.out.println("Ce client n'est pas VIP.");
+            return;
+        }
+
+        System.out.println("Points actuels: " + vip.getPointsFidelite());
+        System.out.print("Points à utiliser: ");
+        int p = scanner.nextInt();
+
+        if (controleurClient.utiliserPointsVIP(c, p))
+            System.out.println("Points utilisés.");
+        else
+            System.out.println("Points insuffisants.");
+    }
+
+    private void gestionEntreprise() {
+        Client c = demanderClientParId();
+        if (!(c instanceof ClientEntreprise)) {
+            System.out.println("Ce client n'est pas une entreprise.");
+            return;
+        }
+
+        System.out.println("1. Calcul prix fidélité");
+        System.out.println("2. Annuler réservation");
+        int choix = scanner.nextInt();
+
+        if (choix == 1) {
+            System.out.print("Prix de base: ");
+            double prix = scanner.nextDouble();
+            System.out.println("Prix final: " +
+                    controleurClient.calculerPrixEntrepriseFidelite(c, prix));
+        } else if (choix == 2) {
+            controleurClient.decrementerReservationEntreprise(c);
+            System.out.println("Réservation annulée.");
+        }
+    }
+
+    private void afficherFactureEntreprise() {
+        Client c = demanderClientParId();
+        System.out.println(controleurClient.obtenirFacturationEntreprise(c));
+    }
+
+    // ================= UTILS =================
+
+    private Client demanderClientParId() {
+        System.out.print("ID client: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Client c = controleurClient.getClientParId(id);
+        if (c == null)
+            System.out.println("Client introuvable.");
+        return c;
+    }
 }
