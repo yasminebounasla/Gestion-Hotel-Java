@@ -8,7 +8,10 @@ import model.Chambres.Composite.Chambre;
 import model.Clients.Client;
 
 public class Reservation {
-     private Client client;
+
+    private static int compteurId = 1;
+    private int id;
+    private Client client;
     private Chambre chambre;
     private LocalDate dateDebut;
     private LocalDate dateFin;
@@ -16,6 +19,7 @@ public class Reservation {
     private double prixTotal;
 
     public Reservation(Client client, Chambre chambre, LocalDate dateDebut, LocalDate dateFin, List<Service> services) {
+        this.id = compteurId++;
         this.client = client;
         this.chambre = chambre;
         this.dateDebut = dateDebut;
@@ -39,4 +43,14 @@ public class Reservation {
     public LocalDate getDateFin() { return dateFin; }
     public List<Service> getServices() { return services; }
     public double getPrixTotal() { return prixTotal; }
+    public int getId() { return id; }
+
+    @Override
+    public String toString() {
+        return "Reservation #" + id +
+               " | Client: " + client.getNomComplet() +
+               " | Chambre: " + chambre.getNumero() +
+               " | Du " + dateDebut + " au " + dateFin +
+               " | Prix: " + prixTotal + " DA";
+    }
 }

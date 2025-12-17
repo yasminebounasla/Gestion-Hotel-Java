@@ -5,10 +5,10 @@ import model.Reservations.Reservation;
 import model.Reservations.Observer.Observateur;
 import model.Reservations.Observer.Sujet;
 
-public class VueReservation implements Observateur{
+public class VueReservationObserver implements Observateur{
     private GestionnaireReservations gestionnaire;
 
-    public VueReservation(GestionnaireReservations gestionnaire) {
+    public VueReservationObserver(GestionnaireReservations gestionnaire) {
         this.gestionnaire = gestionnaire;
     }
     @Override

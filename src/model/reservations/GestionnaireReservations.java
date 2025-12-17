@@ -19,10 +19,11 @@ public class GestionnaireReservations {
         notifier();
     }
 
-    public void deleteReservations(Reservation reservation) {
-        this.reservations.remove(reservation);
+    public void supprimerReservation(Reservation reservation) {
+        reservations.remove(reservation);
         notifier();
     }
+
 
     public boolean updateReservation(Reservation oldR, Reservation newR) {
         int index = reservations.indexOf(oldR); // cherche l'ancienne réservation
@@ -33,6 +34,15 @@ public class GestionnaireReservations {
         }
         return false; // oldR non trouvé
     }
+
+    public Reservation getReservationParId(int id) {
+    for (Reservation r : reservations) {
+        if (r.getId() == id) {
+            return r;
+        }
+    }
+    return null;
+}
 
     public void clearReservations() {
         this.reservations.clear();
