@@ -11,8 +11,20 @@ import model.Chambres.Composite.Chambre;
 import model.Clients.Client;
 import model.Reservations.Reservation;
 
+/**
+ * Classe représentant le menu pour la gestion des réservations.
+ * 
+ * Permet à l'utilisateur de :
+ * - Ajouter, supprimer et modifier des réservations
+ * - Afficher toutes les réservations
+ * - Ajouter des services à une réservation
+ * 
+ * Cette vue utilise le ControleurReservation pour effectuer les opérations
+ * sur le modèle.
+ */
+
 public class VueReservationMenu {
-    private ControleurReservation controleurResrevation;
+    private ControleurReservation controleurResrevation; // Référence au contrôleur des réservations
     private Scanner scanner;
 
     public VueReservationMenu(ControleurReservation controleurReservation) {
@@ -20,8 +32,11 @@ public class VueReservationMenu {
         this.scanner = new Scanner(System.in);
     }
 
+    // afficher le menu de gestion des réservations
     public void afficherMenu() {
-        int choix = -1;
+        int choix = -1; // Initialisation du choix utilisateur
+
+        // Boucle jusqu'à ce que l'utilisateur choisisse de quitter
         while (choix != 0) {
             System.out.println("=== Menu Gestion des Reservations ===");
             System.out.println("1. Ajouter une reservation");
@@ -34,6 +49,7 @@ public class VueReservationMenu {
             choix = scanner.nextInt();
             scanner.nextLine(); // Consommer la nouvelle ligne
 
+            // Exécuter l'action en fonction du choix utilisateur
             switch (choix) {
                 case 1 -> ajouterReservation();
                 case 2 -> supprimerReservation();
@@ -46,12 +62,13 @@ public class VueReservationMenu {
         }
     }
 
+    //  ajouter une réservation
     private void ajouterReservation() {
         System.out.println("Le Id du client : ");
         int idClient = scanner.nextInt();
-        Client client = controleurResrevation.getControleurClient().getClientParId(idClient);
+        Client client = controleurResrevation.getControleurClient().getClientParId(idClient); // obtenir le client
 
-        if(client == null) {
+        if(client == null) { // vérifier si le client existe
             System.out.println("Client non trouvé.");
             return;
         }
@@ -60,8 +77,9 @@ public class VueReservationMenu {
         System.out.print("Numéro de la chambre: ");
         int numeroChambre = scanner.nextInt();
 
-        Chambre chambre = controleurResrevation.getControleurChambre().getChambreParNumero(numeroChambre);
-        if(chambre == null) {
+        Chambre chambre = controleurResrevation.getControleurChambre().getChambreParNumero(numeroChambre); // obtenir la chambre
+
+        if(chambre == null) { // vérifier si la chambre existe
             System.out.println("Chambre non trouvée.");
             return;
         }
@@ -73,10 +91,10 @@ public class VueReservationMenu {
         System.out.print("Date fin (YYYY-MM-DD) : ");
         LocalDate dateFin = LocalDate.parse(scanner.nextLine());
 
-        // Services (simple pour GL)
-        List<Service> services = new ArrayList<>();
+        // dans la création initiale la liste des services est vide , on peut ajouter des services plus tard
+        List<Service> services = new ArrayList<>(); 
 
-        Reservation reservation = new Reservation(
+        Reservation reservation = new Reservation( // créer la réservation
                 client,
                 chambre,
                 dateDebut,
@@ -84,19 +102,21 @@ public class VueReservationMenu {
                 services
         );
 
-        reservation.calculerPrixTotal();
-        controleurResrevation.ajouterReservation(reservation);
+        reservation.calculerPrixTotal(); // calculer le prix total de la réservation
+        controleurResrevation.ajouterReservation(reservation); // ajouter la réservation via le contrôleur
 
         System.out.println("Réservation ajoutée avec succès !");
     }
 
+
+    // supprimer une réservation
     private void supprimerReservation() {
         System.out.print("Entrez l'ID de la réservation à supprimer: ");
         int idReservation = scanner.nextInt();
         scanner.nextLine();
 
-        Reservation reservation = controleurResrevation.getReservationParId(idReservation);
-        if (reservation != null) {
+        Reservation reservation = controleurResrevation.getReservationParId(idReservation); // obtenir la réservation par son ID
+        if (reservation != null) { // vérifier si la réservation existe
             controleurResrevation.supprimerReservation(reservation);
             System.out.println("Réservation supprimée avec succès !");
 
@@ -105,13 +125,14 @@ public class VueReservationMenu {
         }
     }
 
+    // modifier une réservation
     private void modifierReservation() {
 
         System.out.print("ID de la réservation à modifier : ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        Reservation oldR = controleurResrevation.getReservationParId(id);
+        Reservation oldR = controleurResrevation.getReservationParId(id); // obtenir la réservation par son ID
         if (oldR == null) {
             System.out.println("Réservation introuvable.");
             return;
@@ -123,7 +144,7 @@ public class VueReservationMenu {
         System.out.print("Nouvelle date fin (YYYY-MM-DD) : ");
         LocalDate newFin = LocalDate.parse(scanner.nextLine());
 
-        Reservation newR = new Reservation(
+        Reservation newR = new Reservation( // créer une nouvelle réservation avec les nouvelles dates
                 oldR.getClient(),
                 oldR.getChambre(),
                 newDebut,
@@ -131,25 +152,29 @@ public class VueReservationMenu {
                 oldR.getServices()
         );
 
-        newR.calculerPrixTotal();
-        controleurResrevation.modifierReservation(oldR, newR);
+        newR.calculerPrixTotal(); // calculer le prix total de la nouvelle réservation
+        controleurResrevation.modifierReservation(oldR, newR); // modifier la réservation via le contrôleur
 
         System.out.println("Réservation modifiée.");
     }
 
+
+    // afficher toutes les réservations
     private void afficherReservations() {
         System.out.println("=== Liste des Reservations ===");
-        for (Reservation reservation : controleurResrevation.getReservations()) {
+        for (Reservation reservation : controleurResrevation.getReservations()) { // obtenir la liste des réservations
             System.out.println(reservation); 
             System.out.println("-------------------------");
         }
     }
+
+    //ajouter un service à une réservation
     private void ajouterService() {
         System.out.print("ID de la réservation : ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        Reservation reservation = controleurResrevation.getReservationParId(id);
+        Reservation reservation = controleurResrevation.getReservationParId(id); // obtenir la réservation par son ID
         if (reservation == null) {
             System.out.println("Réservation introuvable.");
             return;
@@ -162,8 +187,8 @@ public class VueReservationMenu {
         double prix = scanner.nextDouble();
         scanner.nextLine();
 
-        Service service = new Service(nom, prix);
-        controleurResrevation.ajouterServiceAReservation(reservation, service);
+        Service service = new Service(nom, prix); // créer le service
+        controleurResrevation.ajouterServiceAReservation(reservation, service); // ajouter le service 
 
         System.out.println("Service ajouté avec succès !");
     }

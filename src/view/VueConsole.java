@@ -7,19 +7,34 @@ import controller.ControleurPrincipal;
 import model.Chambres.Composite.Chambre;
 import model.Clients.Client;
 
+/**
+ * Classe représentant la vue console pour les fonctionnalités générales
+ * et complémentaires du système de gestion d'hôtel.
+ * 
+ * Cette classe permet à l'utilisateur d'interagir avec :
+ *  - Les réservations (suppression de toutes les réservations)
+ *  - Les informations clients (obtenir le type ou chercher par nom)
+ *  - Les chambres (afficher les chambres disponibles ou le statut d'une chambre)
+ * 
+ * Elle utilise le ControleurPrincipal pour accéder aux différents contrôleurs.
+ */
+
 public class VueConsole {
     
     private Scanner scanner;
-    private ControleurPrincipal controleurPrincipal;
+    private ControleurPrincipal controleurPrincipal; // Référence au contrôleur principal
 
     public VueConsole(ControleurPrincipal controleurPrincipal) {
         this.controleurPrincipal = controleurPrincipal;
         this.scanner = new Scanner(System.in);
     }
 
+    // afficher le menu 
     public void afficher() {
+        
+        int choix = -1; // Initialisation du choix utilisateur
 
-        int choix = -1;
+        // Boucle jusqu'à ce que l'utilisateur choisisse de quitter
         while (choix != 0) {
             System.out.println("=== Autres fonctionnalités ===");
             System.out.println("1. Supprimer toutes les réservations");
@@ -30,8 +45,9 @@ public class VueConsole {
             System.out.println("0. Retour au menu principal");
             System.out.print("Choisissez une option: ");
             choix = scanner.nextInt();
-            scanner.nextLine(); // Consommer la nouvelle ligne
+            scanner.nextLine(); 
 
+            // Exécuter l'action en fonction du choix utilisateur
             switch (choix) {
                 case 1 -> clearReservations();
                 case 2 -> afficherTypeClient();
@@ -44,29 +60,33 @@ public class VueConsole {
         }
     }
 
+    // supprimer toutes les réservations
     private void clearReservations() {
         controleurPrincipal.getControleurReservation().clearReservations();
         System.out.println("Toutes les réservations ont été supprimées !");
     }
 
+    // obtenir le type d'un client par son ID
     private void afficherTypeClient() {
         System.out.print("Entrez l'ID du client: ");
         int id = scanner.nextInt();
 
-        Client client = controleurPrincipal.getControleurClient().getClientParId(id);
+        Client client = controleurPrincipal.getControleurClient().getClientParId(id); // obtenir le client 
         if (client != null) {
-            String type = controleurPrincipal.getControleurClient().getClientType(client);
+            String type = controleurPrincipal.getControleurClient().getClientType(client); // obtenir le type 
             System.out.println("Type du client: " + type);
         } else {
             System.out.println("Client non trouvé.");
         }
     }   
     
+
+    // obtenir un client par son nom
     private void afficherClientParNom() {
         System.out.print("Entrez le nom du client: ");
         String nom = scanner.nextLine();
 
-        Client client = controleurPrincipal.getControleurClient().getClientParNom(nom);
+        Client client = controleurPrincipal.getControleurClient().getClientParNom(nom); // obtenir le client
         if (client != null) {
             System.out.println("Client trouvé - ID: " + client.getId() + ", Nom: " + client.getNomComplet());
         } else {
@@ -74,8 +94,9 @@ public class VueConsole {
         }
     }
 
+    // afficher les chambres disponibles
     private void afficherChambresDisponibles() {
-        List<Chambre> chambresDisponibles = controleurPrincipal.getControleurChambre().getChambresDisponibles();
+        List<Chambre> chambresDisponibles = controleurPrincipal.getControleurChambre().getChambresDisponibles(); // obtenir la liste des chambres disponibles
         if (chambresDisponibles.isEmpty()) {
             System.out.println("Aucune chambre disponible.");
         } else {
@@ -86,12 +107,14 @@ public class VueConsole {
         }
     }
 
+
+    // obtenir le statut d'une chambre par son numéro
     private void afficherStatusChambre() {
         System.out.print("Entrez le numéro de la chambre: ");
         int numero = scanner.nextInt();
         scanner.nextLine();
 
-        Chambre Chambre = controleurPrincipal.getControleurChambre().getChambreParNumero(numero);
+        Chambre Chambre = controleurPrincipal.getControleurChambre().getChambreParNumero(numero); // obtenir la chambre par son numéro
 
         String statut = controleurPrincipal.getControleurChambre().getStatut(Chambre);
         if (statut != null) {

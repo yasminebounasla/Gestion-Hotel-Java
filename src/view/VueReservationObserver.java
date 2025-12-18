@@ -5,6 +5,15 @@ import model.Reservations.Reservation;
 import model.Reservations.Observer.Observateur;
 import model.Reservations.Observer.Sujet;
 
+/**
+ * cette class observe les modifications des réservations.
+ * 
+ * elle implémente l'interface Observateur et affiche automatiquement
+ * une mise à jour des réservations chaque fois qu'une réservation est ajoutée,
+ * modifiée ou supprimée, en indiquant le client, le numéro de chambre et le prix total.
+ */
+
+
 public class VueReservationObserver implements Observateur{
     private ControleurReservation controleurReservation;
 

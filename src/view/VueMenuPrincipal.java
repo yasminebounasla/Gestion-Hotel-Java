@@ -3,8 +3,16 @@ package view;
 import java.util.Scanner;
 import controller.ControleurPrincipal;
 
+/**
+ * Classe représentant le menu principal de l'application.
+ * 
+ * Cette vue console permet à l'utilisateur de naviguer entre les différentes
+ * fonctionnalités de gestion de l'hôtel : chambres, clients, réservations,
+ * statistiques et autres fonctionnalités.
+ */
+
 public class VueMenuPrincipal {
-    private ControleurPrincipal controleurPrincipal;
+    private ControleurPrincipal controleurPrincipal; // Référence au contrôleur principal
     private Scanner scanner;
 
     public VueMenuPrincipal(ControleurPrincipal controleurPrincipal) {
@@ -12,8 +20,11 @@ public class VueMenuPrincipal {
         this.scanner = new Scanner(System.in);
     }
 
+    // afficher le menu principal
     public void afficherMenu() {
-        int choix = -1;
+        int choix = -1; // Initialisation du choix utilisateur
+
+        // Boucle jusqu'à ce que l'utilisateur choisisse de quitter
         while (choix != 0) {
             System.out.println("=== Menu Principal ===");
             System.out.println("1. Gérer les chambres");
@@ -25,6 +36,7 @@ public class VueMenuPrincipal {
             choix = scanner.nextInt();
             scanner.nextLine(); // Consommer la nouvelle ligne
 
+            // Exécuter l'action en fonction du choix utilisateur
             switch (choix) {
                 case 1:
                     // Appeler la vue de gestion des chambres

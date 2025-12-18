@@ -7,18 +7,34 @@ import model.Clients.ClientEntreprise;
 import model.Clients.ClientRegulier;
 import model.Clients.ClientVIP;
 
+/**
+ * Classe représentant la vue pour la gestion des clients.
+ * 
+ * Cette classe permet à l'utilisateur d'interagir avec les clients via la console.
+ * Elle offre un menu pour :
+ *  - Ajouter, modifier et supprimer des clients
+ *  - Afficher tous les clients
+ *  - Gérer les points fidélité pour les clients VIP
+ *  - Gérer la fidélité et la facturation pour les clients Entreprise
+ * 
+ * Elle utilise le ControleurClient pour effectuer toutes les opérations nécessaires.
+ */
+
 public class VueClient {
-    private ControleurClient controleurClient;
-    private Scanner scanner;
+    private ControleurClient controleurClient; // Référence au contrôleur des clients
+    private Scanner scanner; // Scanner pour la saisie utilisateur
 
     public VueClient(ControleurClient controleurClient) {
         this.controleurClient = controleurClient;
         this.scanner = new Scanner(System.in);
     }
 
+    // afficher le menu de gestion des clients
     public void afficherMenu() {
-        int choix = -1;
-        while (choix != 0) {
+        int choix = -1; // Initialisation du choix utilisateur
+
+        while (choix != 0) { // Boucle jusqu'à ce que l'utilisateur choisisse de quitter
+
             System.out.println("=== Menu Gestion des Clients ===");
             System.out.println("1. Ajouter un client");
             System.out.println("2. Supprimer un client");
@@ -32,6 +48,7 @@ public class VueClient {
             choix = scanner.nextInt();
             scanner.nextLine(); // Consommer la nouvelle ligne
 
+            // Exécuter l'action en fonction du choix utilisateur
             switch (choix) {
                 case 1:
                     ajouterClient();
@@ -63,6 +80,7 @@ public class VueClient {
         }
     }
 
+    // ajouter un client
     private void ajouterClient() {
         System.out.println("Type de client : ");
         System.out.println("1. Régulier");
@@ -85,6 +103,7 @@ public class VueClient {
 
         Client client;
 
+        // Créer le client en fonction du type choisi
         switch (type) {
             case 1 -> client = new ClientRegulier(nom, prenom, tel, email);
             case 2 -> client = new ClientVIP(nom, prenom, tel, email);
@@ -107,16 +126,17 @@ public class VueClient {
             }
         }
 
-        controleurClient.ajouterClient(client);
+        controleurClient.ajouterClient(client); // Ajouter le client via le contrôleur
         System.out.println("Client ajouté avec succès");
     }
 
 
+    // supprimer un client
     private void supprimerClient() {
 
         System.out.print("Entrez l'ID du client à supprimer: ");
         int id = scanner.nextInt();
-        Client client = controleurClient.getClientParId(id);
+        Client client = controleurClient.getClientParId(id); // Récupérer le client par son ID
 
         if (client != null) {
             controleurClient.supprimerClient(client);
@@ -126,13 +146,14 @@ public class VueClient {
         }
     }
 
+    // modifier un client
     private void modifierClient() {
 
         System.out.print("Entrez l'ID du client à modifier: ");
         int id = scanner.nextInt();
         scanner.nextLine(); 
-
-        Client oldClient = controleurClient.getClientParId(id);
+ 
+        Client oldClient = controleurClient.getClientParId(id); // Récupérer le client par son ID
 
         if (oldClient != null) {
 
@@ -164,14 +185,16 @@ public class VueClient {
                 newClient = new ClientEntreprise(newNom, newPrenom, newTelephone, newEmail,
                                             nomEntreprise, numeroSIRET, adresseFacturation);
 
-            } else if (oldClient instanceof ClientVIP) {
+
+            } else if (oldClient instanceof ClientVIP) { // ClientVIP
                 newClient = new ClientVIP(newNom, newPrenom, newTelephone, newEmail);
 
             } else { // ClientRegulier
                 newClient = new ClientRegulier(newNom, newPrenom, newTelephone, newEmail);
             }
 
-            if (controleurClient.updateClient(oldClient, newClient)) {
+            if (controleurClient.updateClient(oldClient, newClient)) { // Modifier le client via le contrôleur
+
                 System.out.println("Client modifié avec succès.");
             } else {
                 System.out.println("Échec de la modification du client.");
@@ -183,19 +206,22 @@ public class VueClient {
    }
 
 
-
+    // afficher tous les clients
     private void afficherClients() {
         System.out.println("=== Liste des Clients ===");
-        for (Client client : controleurClient.getClients()) {
+        for (Client client : controleurClient.getClients()) { // Récupérer tous les clients via le contrôleur
             System.out.println(client);
         }
     }    
 
-    // ================= MÉTIER =================
+    // Métier 
 
+    
+    // gestion des points fidélité pour les clients VIP
     private void gestionPointsVIP() {
         Client c = demanderClientParId();
-        if (!(c instanceof ClientVIP vip)) {
+
+        if (!(c instanceof ClientVIP vip)) { // vérifier si le client est VIP
             System.out.println("Ce client n'est pas VIP.");
             return;
         }
@@ -204,15 +230,17 @@ public class VueClient {
         System.out.print("Points à utiliser: ");
         int p = scanner.nextInt();
 
-        if (controleurClient.utiliserPointsVIP(c, p))
+        if (controleurClient.utiliserPointsVIP(c, p)) // utiliser les points via le contrôleur
             System.out.println("Points utilisés.");
         else
             System.out.println("Points insuffisants.");
     }
 
+    // gestion fidélité pour les clients Entreprise
     private void gestionEntreprise() {
         Client c = demanderClientParId();
-        if (!(c instanceof ClientEntreprise)) {
+
+        if (!(c instanceof ClientEntreprise)) { // vérifier si le client est Entreprise
             System.out.println("Ce client n'est pas une entreprise.");
             return;
         }
@@ -221,24 +249,28 @@ public class VueClient {
         System.out.println("2. Annuler réservation");
         int choix = scanner.nextInt();
 
+        // calculer le prix avec fidélité 
         if (choix == 1) {
             System.out.print("Prix de base: ");
             double prix = scanner.nextDouble();
             System.out.println("Prix final: " +
                     controleurClient.calculerPrixEntrepriseFidelite(c, prix));
-        } else if (choix == 2) {
-            controleurClient.decrementerReservationEntreprise(c);
+
+        } else if (choix == 2) { // annuler une réservation
+            controleurClient.decrementerReservationEntreprise(c); 
             System.out.println("Réservation annulée.");
         }
     }
 
+    // afficher la facture pour un client Entreprise
     private void afficherFactureEntreprise() {
         Client c = demanderClientParId();
         System.out.println(controleurClient.obtenirFacturationEntreprise(c));
     }
 
-    // ================= UTILS =================
+    // Utils
 
+    // demander un client par son ID
     private Client demanderClientParId() {
         System.out.print("ID client: ");
         int id = scanner.nextInt();
