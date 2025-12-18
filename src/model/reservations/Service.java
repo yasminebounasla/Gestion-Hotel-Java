@@ -1,5 +1,7 @@
 package model.Reservations;
-
+/**
+ * Classe représentant un service supplémentaire d'une réservation.
+ */
 public class Service {
     private String nom;
     private double prix;
@@ -8,7 +10,7 @@ public class Service {
         this.nom = nom;
         this.prix = prix;
     }
-
+    // Getters
     public String getNom() {
         return nom;
     }
