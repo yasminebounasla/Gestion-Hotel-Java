@@ -6,7 +6,12 @@ import java.util.List;
 
 import model.Chambres.Composite.Chambre;
 import model.Clients.Client;
-
+/**
+ * Classe représentant une réservation.
+ * 
+ * Une réservation est associée à un client et une chambre, avec des dates
+ * de début et de fin, et éventuellement des services supplémentaires.
+ */
 public class Reservation {
 
     private static int compteurId = 1;
@@ -27,7 +32,9 @@ public class Reservation {
         this.services = services != null ? services : new ArrayList<>();
         this.prixTotal = 0;
     }
-
+    /**
+     * Calcule le prix total de la réservation (chambre + services)
+    */
     public double calculerPrixTotal() {
         double total = chambre.calculerPrix();
         for (Service s : services) {
@@ -36,7 +43,7 @@ public class Reservation {
         this.prixTotal = total;
         return total;
     }
-
+    // Getters
     public Client getClient() { return client; }
     public Chambre getChambre() { return chambre; }
     public LocalDate getDateDebut() { return dateDebut; }
