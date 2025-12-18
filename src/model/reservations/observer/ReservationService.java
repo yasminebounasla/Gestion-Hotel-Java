@@ -13,22 +13,29 @@ public class ReservationService implements Sujet {
     public ReservationService() {
         this.observateurs = new ArrayList<>();
     }
-
+    
     @Override
     public void ajouterObservateur(Observateur obs) {
+        // Ajoute un observateur à la liste
+        // On vérifie d'abord qu'il n'existe pas déjà
+        // pour éviter les doublons
         if (!observateurs.contains(obs)) {
             observateurs.add(obs);
         }
     }
-
+    
     @Override
     public void supprimerObservateur(Observateur obs) {
+        // Supprime un observateur de la liste
+       // Cet observateur ne recevra plus de notifications
         observateurs.remove(obs);
     }
 
     @Override
     public void notifierObservateurs() {
         for (Observateur obs : observateurs) {
+                 // Notifie tous les observateurs enregistrés
+                // Chaque observateur est informé qu'un changement
             obs.mettreAJour(this);
         }
     } 
