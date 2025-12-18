@@ -2,7 +2,10 @@ package model.Reservations.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe représentant le sujet observable pour les réservations.
+ * Permet de notifier tous les observateurs lors d'un changement.
+ */
 public class ReservationService implements Sujet {
 
     private List<Observateur> observateurs;
