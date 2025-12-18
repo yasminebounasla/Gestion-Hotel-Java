@@ -28,6 +28,7 @@ public class VueReservationMenu {
             System.out.println("2. Supprimer une reservation");
             System.out.println("3. Modifier une reservation");
             System.out.println("4. Afficher toutes les reservations");
+            System.out.println("5. Ajouter un service à une réservation");
             System.out.println("0. Retour au menu principal");
             System.out.print("Choisissez une option: ");
             choix = scanner.nextInt();
@@ -38,6 +39,7 @@ public class VueReservationMenu {
                 case 2 -> supprimerReservation();
                 case 3 -> modifierReservation();
                 case 4 -> afficherReservations();
+                case 5 -> ajouterService();
                 case 0 -> System.out.println("Retour au menu principal.");
                 default -> System.out.println("Option invalide. Veuillez réessayer.");
             }
@@ -142,5 +144,29 @@ public class VueReservationMenu {
             System.out.println("-------------------------");
         }
     }
+    private void ajouterService() {
+        System.out.print("ID de la réservation : ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Reservation reservation = controleurResrevation.getReservationParId(id);
+        if (reservation == null) {
+            System.out.println("Réservation introuvable.");
+            return;
+        }
+
+        System.out.print("Nom du service : ");
+        String nom = scanner.nextLine();
+
+        System.out.print("Prix du service : ");
+        double prix = scanner.nextDouble();
+        scanner.nextLine();
+
+        Service service = new Service(nom, prix);
+        controleurResrevation.ajouterServiceAReservation(reservation, service);
+
+        System.out.println("Service ajouté avec succès !");
+    }
+
 
 }

@@ -1,18 +1,14 @@
 package model.Hotel;
 
-import java.util.ArrayList;
-import model.Chambres.Composite.Chambre;
-
 public class Hotel {
-    private static Hotel instance ;
-    private String nomHotel ;
-    private ArrayList<Chambre> chambres ;
+    private static Hotel instance;
+    private String nomHotel;
 
     private Hotel(String nomHotel) {
         this.nomHotel = nomHotel;
-        this.chambres = new ArrayList<>();
     }
 
+    // création
     public static synchronized Hotel getInstance(String nomHotel) {
         if (instance == null) {
             instance = new Hotel(nomHotel);
@@ -20,19 +16,16 @@ public class Hotel {
         return instance;
     }
 
-    // Getters
+    // consultation uniquement
+    public static Hotel getInstance() {
+        return instance;
+    }
+
     public String getNomHotel() {
         return nomHotel;
     }
 
-    public ArrayList<Chambre> getChambres() {
-        return chambres;
-    }
-
-
-    // Setters
     public void setNomHotel(String nomHotel) {
-        this.nomHotel = nomHotel;   
+        this.nomHotel = nomHotel;
     }
-
 }

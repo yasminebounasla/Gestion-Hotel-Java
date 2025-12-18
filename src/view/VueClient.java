@@ -193,24 +193,6 @@ public class VueClient {
 
     // ================= MÉTIER =================
 
-    private void calculerPrixReservation() {
-        Client c = demanderClientParId();
-        if (c == null) return;
-
-        System.out.print("Prix de base (DA): ");
-        double prix = scanner.nextDouble();
-
-        double prixFinal = controleurClient.calculerPrix(c, prix);
-        System.out.println("Prix final: " + prixFinal + " DA");
-
-        if (c instanceof ClientEntreprise) {
-            controleurClient.incrementerReservationEntreprise(c);
-        }
-        if (c instanceof ClientVIP vip) {
-            vip.ajouterPoints((int) prixFinal / 10);
-        }
-    }
-
     private void gestionPointsVIP() {
         Client c = demanderClientParId();
         if (!(c instanceof ClientVIP vip)) {

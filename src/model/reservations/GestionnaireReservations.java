@@ -72,4 +72,11 @@ public class GestionnaireReservations {
     private void notifier() {
         reservationService.notifierObservateurs();
     }
+
+    public void ajouterServiceAReservation(Reservation reservation, Service service) {
+        reservation.getServices().add(service);
+        reservation.calculerPrixTotal();
+        notifier();
+    }
+
 }

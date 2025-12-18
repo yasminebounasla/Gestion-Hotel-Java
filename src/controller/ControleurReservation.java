@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Reservations.GestionnaireReservations;
 import model.Reservations.Reservation;
+import model.Reservations.Service;
 
 public class ControleurReservation {
 
@@ -51,6 +52,10 @@ public class ControleurReservation {
 
     public ArrayList<Reservation> getReservations() {
         return this.gestionnaireR.getReservations();
+    }
+
+    public void ajouterServiceAReservation(Reservation reservation, Service service) {
+        gestionnaireR.ajouterServiceAReservation(reservation, service);
     }
 
 }
